@@ -71,12 +71,19 @@ namespace RequestsTest
 
                 foreach (var link in links)
                 {
-                    Stopwatch stopwatch = new Stopwatch();
+                    try
+                    {
+                        Stopwatch stopwatch = new Stopwatch();
 
-                    stopwatch.Start();
-                    var result = client.DownloadString(link);
-                    stopwatch.Stop();
-                    Console.WriteLine(link + " = " + stopwatch.Elapsed);
+                        stopwatch.Start();
+                        var result = client.DownloadString(link);
+                        stopwatch.Stop();
+                        Console.WriteLine(link + " = " + stopwatch.Elapsed);
+                    }
+                    catch(WebException e)
+                    {
+                        Console.WriteLine(link + " - " + e.Message);
+                    }
                 }
 
                 Console.WriteLine("Elapsing is finished");
